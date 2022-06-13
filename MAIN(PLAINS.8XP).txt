@@ -1,0 +1,228 @@
+[i]PLAIN
+[i]Please Note: This game is made only for educational purposes and will not be sold.
+[i]Disclaimer: By installing this software you agree to take all responsibility for any damages, hardware and software, caused to your calculator.
+[i]--------------------------------------
+[i] Program Name: The Plain Plane Game CE
+[i] Author: Lane "OldNewTimer" Nickson
+[i] Build: 1.0
+[i]--------------------------------------
+[i]VARIABLES
+[i]L1(1)=Missile Position
+[i]L1(2)=Buffer
+[i]L1(3)=Buffer
+[i]L1(4)=Enemy Plane Position
+[i]L1(5)=Buffer
+[i]A=GetKey
+[i]B=Buffer
+[i]L=Level
+[i]V=Buffer
+[i]X=Xcoord
+[i]Y=Ycoord
+[i]==========Load the graphics and clean up some stuff==========
+CompilePrgm(PLAING
+0->A->B->C->D->E->F->G->H->I->J->K->L->M->N->O->P->Q->R->S->T->U->V->X->Y->Z->L1(1)->L1(2)->L1(3)->L1(4)->L1(5)->L1(6)->L2(1)->L2(2)->L2(3)->L2(4)->L2(5)->L2(6)
+Begin
+[i]=========Show Logo=========
+Lbl LOGO
+det(5,0
+1->A
+51->B
+0->C
+det(5,255
+While B!=160
+det(2,255
+det(36,C,50,1,100
+det(2,224
+[i]110
+det(36,A,50,50,50
+det(2,60
+[i]160
+det(36,B,50,50,50
+det(2,239
+[i]110
+det(36,A,100,100,50
+A+1->A
+B+1->B
+C+1->C
+Pause 5
+End
+SetTextScale(2,2
+det(18,"OLDNEWTIMER PRESENTS",7,170
+Pause 1500
+[i]==========title screen==========
+Lbl TITLE
+FillScreen(159
+SetTextScale(3,3
+SetTextFGColor(234
+det(18,"THE PLAIN",60,10
+det(18,"PLANE GAME",55,35
+SetTextScale(1,1
+SetTextFGColor(0
+det(18,"(C) 2017 OldNewTimer",90,70
+det(18,"A CC:20 Project",100,80
+det(18,"Version 1.0",1,230
+ScaledTransparentSprite_NoClip(0,65,95,8,8
+Pause 
+[i]==========Sea Background==========
+Call LVL
+Goto GAME
+Lbl LVL
+FillScreen(191
+SetColor(223
+FillRectangle(90,50,150,60
+SetTextFGColor(0
+PrintStringXY("LEVEL",120,60
+SetTextXY(170,60
+PrintUInt(L,2
+PrintStringXY("Pro Tip:",130,80
+PrintStringXY("Don't Die",130,90
+Pause 
+Return
+Lbl GAME
+0->A->B->Y->C->X->V+1->L
+10->H
+1->S->L
+While Y<=230
+	While X<=310
+		Sprite_NoClip(5,X,Y)
+		10+X->X
+	End
+	0->X
+	Y+10->Y
+End
+0->A->B->C->X->Y
+[i]==========Move Plane==========
+L1(4)->F
+L1(1)->G
+Lbl MOVE
+While A!=15
+	ScaledTransparentSprite_NoClip(0,V,220,1,1)
+	getKey->A
+	If A=2
+		V->Z
+		max(10,(V-10))->V
+		ScaledSprite_NoClip(3,Z-10,220,1,1
+		ScaledSprite_NoClip(3,Z,220,1,1
+		ScaledSprite_NoClip(3,Z-10,230,1,1
+		ScaledSprite_NoClip(3,Z,230,1,1
+		ScaledSprite_NoClip(3,Z+10,220,1,1
+		ScaledSprite_NoClip(3,Z,220,1,1
+		ScaledSprite_NoClip(3,Z+10,230,1,1
+		ScaledSprite_NoClip(3,Z,230,1,1
+		ScaledSprite_NoClip(3,Z+16,220,1,1
+	End
+	If A=3
+		V->Z
+		min(285,(V+10))->V
+		ScaledSprite_NoClip(3,Z-10,220,1,1
+		ScaledSprite_NoClip(3,Z,220,1,1
+		ScaledSprite_NoClip(3,Z-10,230,1,1
+		ScaledSprite_NoClip(3,Z,230,1,1
+		ScaledSprite_NoClip(3,Z+10,220,1,1
+		ScaledSprite_NoClip(3,Z,220,1,1
+		ScaledSprite_NoClip(3,Z+10,230,1,1
+		ScaledSprite_NoClip(3,Z,230,1,1
+	End
+[i]==========Move Missile==========
+	If A=9 and L1(1)=0
+		230->L1(1)->E->G
+		V->L1(2)
+	End
+	If L1(1)!=0
+		L1(3)+1->L1(3)
+		max(0,(L1(1)-10))->L1(1)
+		ScaledTransparentSprite_NoClip(4,L1(2),L1(1),1,1)
+		ScaledTransparentSprite_NoClip(0,V,220,1,1)
+	End
+[i]==========Generate Enemy Planes==========
+	If L1(4)=0 or L1(4)>=220
+		remainder(rand(219))->Q
+		If Q<10
+			10->Q
+		End
+	End
+	If L1(4)=220
+		0->L1(4)->D->F
+		H-1->H
+	End
+	If L1(4)=0 or L1(4)>=220
+		remainder(rand(219))->Q
+	End
+	If H=0
+		Goto OVER
+	End
+	min(220,(L1(4)+S))->L1(4)
+[i]==========Display Sprites=========
+	SetDraw(1
+	0->X->Y
+	If L1(4)>=F+10
+		L1(4)->D->F
+	End
+	If L1(1)<=G-10
+		L1(1)->E->G
+	End
+		
+	While X<=310
+		Sprite_NoClip(3,X,D-10)
+		Sprite_NoClip(3,X,D)
+		Sprite_NoClip(3,X,D+10)
+		Sprite_NoClip(3,X,220)
+		Sprite_NoClip(3,X,230)
+		Sprite_NoClip(3,X,E)
+		Sprite_NoClip(3,X,E+10)
+		Sprite_NoClip(3,X,E+20)
+		Sprite_NoClip(3,X,E+30)
+		Sprite_NoClip(3,X,E-10)
+		X+10->X
+	End
+	0->X
+	ScaledTransparentSprite_NoClip(2,Q,L1(4),1,1)
+	ScaledTransparentSprite_NoClip(0,V,220,1,1)
+	SetTextFGColor(223
+	PrintStringXY("Lives:",1,230
+	SetTextXY(60,230
+	PrintUInt(H,2
+	If L1(1)!=0
+		ScaledTransparentSprite_NoClip(4,L1(2),L1(1),1,1)
+	End
+	Blit(1
+	SetDraw(0
+	[i]==========Hit Detection==========
+	If L1(2)>=Q-10 and L1(2)<=Q+10
+		If L1(1)>=L1(4)-10 and L1(1)<=L1(4)+10
+			ScaledTransparentSprite_NoClip(6,Q,L1(4),1,1
+			Pause 300
+			0->L1(4)->D->F->E->G->Q->L1(1)
+			1+T->T
+			If T>=10
+				1+L->L
+				0->T
+				1+S->S
+				If S=3
+					5->S
+				End
+				If S=6
+					Goto WIN
+				End
+				Call LVL
+			End
+		End
+	End
+End
+Goto STOP
+Lbl WIN
+FillScreen(24
+SetTextFGColor(7
+SetTextScale(3,3
+PrintStringXY("YOU WON!",70,50)
+Pause 
+0->L+1->S
+Goto STOP
+Lbl OVER
+FillScreen(0
+SetTextFGColor(224
+SetTextScale(3,3
+PrintStringXY("GAME OVER",55,50)
+Pause 
+[i]==========End Program==========
+Lbl STOP
