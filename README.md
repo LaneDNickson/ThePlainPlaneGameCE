@@ -1,7 +1,7 @@
 # The Plain Plane Game CE
 Make things go boom in a plane in this game for the TI-84 Plus CE.
 
-![Game GIF](https://oldnewtimer.github.io/assets/images/Plane.gif)
+![Game GIF](https://lanednickson.github.io/assets/images/Plane.gif)
                                                                                                                                          
 ## Installation
 
